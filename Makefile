@@ -1,12 +1,12 @@
 APP_NAME = hangman
-LIB_NAME = libhangman
-TEST_NAME = hangman-test
+LIB_NAME = lib$(APP_NAME)
+TEST_NAME = $(APP_NAME)-test
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
-CPPFLAGS = -I src -I thirdparty -I test -MP -MMD
-LDFLAGS =
-LDLIBS =
+CPPFLAGS = -I $(SRC_DIR) -I $(THIRD_DIR) -I $(SDL_INCLUDE_PATH) -L $(SDL_PATH)/$(SDL_LIB_DIR) -MP -MMD
+LDFLAGS = -D_REENTRANT
+LDLIBS = -Wl,-rpath=$(shell pwd)/$(SDL_PATH)/$(SDL_LIB_DIR) -Wl,--enable-new-dtags -lSDL2 -lm -ldl -lpthread -lrt -Wl,--no-as-needed -ldl
 
 BIN_DIR = bin
 OBJ_DIR = obj
@@ -14,9 +14,17 @@ SRC_DIR = src
 TEST_DIR = test
 THIRD_DIR = thirdparty
 
+SDL_DIR = SDL
+SDL_LIB_DIR = lib
+SDL_INCLUDE_DIR = include
+
 APP_PATH = $(BIN_DIR)/$(APP_NAME)
 LIB_PATH = $(OBJ_DIR)/$(SRC_DIR)/$(LIB_NAME)/$(LIB_NAME).a
 TEST_PATH = $(BIN_DIR)/$(TEST_NAME)
+
+SDL_PATH = $(THIRD_DIR)/$(SDL_DIR)
+SDL_INCLUDE_PATH = $(SDL_PATH)/$(SDL_INCLUDE_DIR)
+
 CTEST_PATH = $(THIRD_DIR)/ctest.h
 
 SRC_EXT = c
