@@ -1,4 +1,0 @@
-#!/bin/sh                                                                       
-
-prefix=".."
-echo "$path"
