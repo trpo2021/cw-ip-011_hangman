@@ -2,7 +2,7 @@ APP_NAME = hangman
 LIB_NAME = lib$(APP_NAME)
 TEST_NAME = $(APP_NAME)-test
 
-CC = gcc
+CC = g++
 CFLAGS = -Wall -Wextra -Werror
 CPPFLAGS = -I $(SRC_DIR) -I $(THIRD_DIR) -I $(SDL_INCLUDE_PATH) -L $(SDL_PATH)/$(SDL_LIB_DIR) -MP -MMD
 LDFLAGS = -D_REENTRANT
