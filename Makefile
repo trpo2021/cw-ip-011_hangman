@@ -6,7 +6,7 @@ CC = g++
 CFLAGS = -Wall -Wextra -Werror
 CPPFLAGS = -I $(SRC_DIR) -I $(THIRD_DIR) -I $(SDL_INCLUDE_PATH) -L $(SDL_PATH)/$(SDL_LIB_DIR) -MP -MMD
 LDFLAGS = -D_REENTRANT
-LDLIBS = -Wl,-rpath=$(shell pwd)/$(SDL_PATH)/$(SDL_LIB_DIR) -Wl,--enable-new-dtags -lSDL2 -lm -ldl -lpthread -lrt -Wl,--no-as-needed -ldl
+LDLIBS = -Wl,-rpath=$(shell pwd)/$(SDL_PATH)/$(SDL_LIB_DIR) -Wl,--enable-new-dtags -lSDL2 -lSDL2_image -lm -ldl -lpthread -lrt -Wl,--no-as-needed -ldl
 
 BIN_DIR = bin
 OBJ_DIR = obj
