@@ -41,7 +41,7 @@ void add_part(SDL_Renderer* renderer, int attempt)
  * Главная функция для создания, изменения и закрытия окна с виселицей.
  * @param attempt Число неудачных попыток. Передать START_COMMAND
  * при запуске программы, CLOSE_COMMAND при её закрытии, или числа
- * от 1 до 6 для соответсвующей неудачной попытки.
+ * от 1 до 6 для соответствующей неудачной попытки.
  * Число попыток остаётся неизменным после вызова функции.
  * @param renderer Двойная ссылка рендера.
  * @param window Двойная ссылка окна.
@@ -50,7 +50,7 @@ void add_part(SDL_Renderer* renderer, int attempt)
  */
 int gibbet(int attempt, SDL_Renderer** renderer, SDL_Window** window)
 {
-    int init_code;
+    int init_code = STATE_OK;
     if (*renderer == NULL || *window == NULL)
         init_code = initialize(renderer, window);
     if (init_code != STATE_OK) {
