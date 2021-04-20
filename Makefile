@@ -49,7 +49,6 @@ all: $(APP_PATH)
 .PHONY: test
 
 test: $(TEST_PATH)
-	$(TEST_PATH)
 
 -include $(DEPS)
 
