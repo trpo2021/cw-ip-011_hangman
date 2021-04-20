@@ -1,16 +1,23 @@
 name: Build
 
 on: push
-
 jobs:
   build:
     runs-on: ubuntu-20.04
-
     steps:
       - uses: actions/checkout@v2
-
+        
       - name: Check codestyle
         run: git ls-files *.{c,h} | xargs clang-format -i && git diff --exit-code
 
       - name: Build application
         run: make
+
+      - name: Build test
+        run: make test
+      
+      - name: Test application
+        uses: GabrielBB/xvfb-action@v1.5
+        with:
+          run: ./bin/hangman-test
+          options: -ac :99 -screen 0 800x600x16 +extension RANDR
