@@ -4,7 +4,7 @@
 #include <SDL2/SDL.h>
 #include <ctest.h>
 
-CTEST(GRAPHIC, INIT_AND_CLOSE)
+CTEST(GRAPHIC, INIT_DRAW_CLOSE)
 {
     int attempt, code = STATE_OK;
     SDL_Renderer* renderer = NULL;
@@ -15,4 +15,6 @@ CTEST(GRAPHIC, INIT_AND_CLOSE)
         code = gibbet(attempt, &renderer, &window);
         ASSERT_EQUAL(code, STATE_OK);
     }
+    ASSERT_NULL(renderer);
+    ASSERT_NULL(window);
 }

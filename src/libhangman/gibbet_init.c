@@ -67,10 +67,14 @@ int initialize(SDL_Renderer** renderer, SDL_Window** window)
  */
 void close(SDL_Renderer** renderer, SDL_Window** window, int code)
 {
-    if (*renderer != NULL)
+    if (*renderer != NULL) {
         SDL_DestroyRenderer(*renderer);
-    if (*window != NULL)
+        *renderer = NULL;
+    }
+    if (*window != NULL) {
         SDL_DestroyWindow(*window);
+        *window = NULL;
+    }
     if (code != ERROR_SDL_NOT_INIT)
         SDL_Quit();
 }
