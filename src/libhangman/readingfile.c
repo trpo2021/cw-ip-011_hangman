@@ -1,5 +1,5 @@
-#include "constants.h"
 #include "readingfile.h"
+#include "constants.h"
 #include <stdio.h>
 #include <stdlib.h>
 
