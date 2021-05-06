@@ -38,9 +38,6 @@ int readingfile(char* s)
     }
     words[i][j] = '\0';
     fclose(p);
-    for (i = 0; i < num; i++)
-        printf("%s ", words[i]);
-
     strcpy(s, words[rand() % num]);
     for (i = 0; i < num; i++)
         free(words[i]);
