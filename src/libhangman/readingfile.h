@@ -1,3 +1,3 @@
 #pragma once
 
-void readingfile();
+int readingfile(char* s);
