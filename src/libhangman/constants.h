@@ -37,3 +37,8 @@ static const int RED_BACK = 0;
 static const int GREEN_BACK = 0;
 static const int BLUE_BACK = 0;
 static const int ALPHA_BACK = 0;
+
+static const char FILE_PATH[] = "words.txt";
+static const int MAX_WORD_SIZE = 20;
+static const int SUCCES_RF = 5;
+static const int FILE_NOT_FOUND = 6;
