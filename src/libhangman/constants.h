@@ -1,6 +1,7 @@
 #pragma once
 
 static const int MAX_FAIL = 6;
+static const char HIDDEN_SYMBOL = '#';
 
 static const int WINDOW_WIDTH = 500;
 static const int WINDOW_HEIGHT = 800;
