@@ -109,12 +109,6 @@ void add_leg1(SDL_Renderer* renderer)
 void add_leg2(SDL_Renderer* renderer)
 {
     int legX1, legY1, legX2, legY2;
-    /**
-     * legX1 = bodyX
-     * legY1 = bodyY + 3 * body_radY / 4
-     * legX2 = legX1 + 2 * head_rad
-     * legY2 = legY1 + body_radY
-     */
     legX1 = BODY_X;
     legY1 = BODY_Y + 3 * BODY_RAD_Y / 4;
     legX2 = legX1 + 2 * HEAD_RAD;
