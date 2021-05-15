@@ -76,3 +76,9 @@ static const char FILE_PATH[] = "words.txt";
 static const int MAX_WORD_SIZE = 20;
 static const int SUCCES_RF = 5;
 static const int FILE_NOT_FOUND = 6;
+
+static const int ALPHABET_SIZE = 26;
+static const char ASCII_START = 'A';
+static const char ASCII_END = 'Z';
+static const char ASCII_CAPS_DISLOC = 'a' - 'A';
+static const int SUCCESS_GAME = 7;
