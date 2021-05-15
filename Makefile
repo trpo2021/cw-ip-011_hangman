@@ -1,6 +1,7 @@
 APP_NAME = hangman
 LIB_NAME = lib$(APP_NAME)
 TEST_NAME = $(APP_NAME)-test
+LIB_TEST_NAME = lib$(TEST_NAME)
 
 CC = g++
 CFLAGS = -Wall -Wextra -Werror
@@ -21,6 +22,7 @@ SDL_INCLUDE_DIR = include
 APP_PATH = $(BIN_DIR)/$(APP_NAME)
 LIB_PATH = $(OBJ_DIR)/$(SRC_DIR)/$(LIB_NAME)/$(LIB_NAME).a
 TEST_PATH = $(BIN_DIR)/$(TEST_NAME)
+LIB_TEST_PATH = $(OBJ_DIR)/$(SRC_DIR)/$(LIB_NAME)/$(LIB_TEST_NAME).a
 
 SDL_PATH = $(THIRD_DIR)/$(SDL_DIR)
 SDL_INCLUDE_PATH = $(SDL_PATH)/$(SDL_INCLUDE_DIR)
@@ -36,6 +38,7 @@ APP_OBJECTS = $(APP_SOURCES:$(SRC_DIR)/%.$(SRC_EXT)=$(OBJ_DIR)/$(SRC_DIR)/%.o)
 
 LIB_SOURCES = $(shell find $(SRC_DIR)/$(LIB_NAME) -name '*.$(SRC_EXT)')
 LIB_OBJECTS = $(LIB_SOURCES:$(SRC_DIR)/%.$(SRC_EXT)=$(OBJ_DIR)/$(SRC_DIR)/%.o)
+LIB_TEST_OBJECTS = $(LIB_SOURCES:$(SRC_DIR)/%.$(SRC_EXT)=$(OBJ_DIR)/$(SRC_DIR)/%-test.o)
 
 TEST_SOURCES = $(shell find $(TEST_DIR) -name '*.$(SRC_EXT)')
 TEST_OBJECTS = $(TEST_SOURCES:$(TEST_DIR)/%.$(SRC_EXT)=$(OBJ_DIR)/$(TEST_DIR)/%.o)
@@ -55,8 +58,12 @@ test: $(TEST_PATH)
 $(APP_PATH): $(APP_OBJECTS) $(LIB_PATH)
 	$(CC) $(CFLAGS) $(CPPFLAGS) $^ -o $@ $(LDFLAGS) $(LDLIBS)
 
-$(TEST_PATH): $(TEST_OBJECTS) $(LIB_PATH) $(CTEST_PATH)
-	$(CC) $(CFLAGS) $(CPPFLAGS) $(TEST_OBJECTS) $(LIB_PATH) -o $@ $(LDFLAGS) $(LDLIBS)
+$(TEST_PATH): CPPFLAGS += -DTEST
+$(TEST_PATH): $(TEST_OBJECTS) $(LIB_TEST_PATH) $(CTEST_PATH)
+	$(CC) $(CFLAGS) $(CPPFLAGS) $(TEST_OBJECTS) $(LIB_TEST_PATH) -o $@ $(LDFLAGS) $(LDLIBS)
+
+$(LIB_TEST_PATH): $(LIB_TEST_OBJECTS)
+	ar rcs $@ $^
 
 $(LIB_PATH): $(LIB_OBJECTS)
 	ar rcs $@ $^
@@ -64,8 +71,14 @@ $(LIB_PATH): $(LIB_OBJECTS)
 $(OBJ_DIR)/%.o: %.c
 	$(CC) -c $(CFLAGS) $(CPPFLAGS) $< -o $@
 
+$(OBJ_DIR)/%-test.o: %.c
+	$(CC) -c $(CFLAGS) $(CPPFLAGS) $< -o $@
+
 .PHONY: clean
+
 clean:
 	$(RM) $(APP_PATH) $(LIB_PATH)
 	find $(OBJ_DIR) -name '*.o' -exec $(RM) '{}' \;
 	find $(OBJ_DIR) -name '*.d' -exec $(RM) '{}' \;
+	find $(OBJ_DIR) -name '*-test.o' -exec $(RM) '{}' \;
+	find $(OBJ_DIR) -name '*-test.d' -exec $(RM) '{}' \;
