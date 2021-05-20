@@ -1,10 +1,12 @@
+DIRECTORY = $(shell pwd)
+
 APP_NAME = hangman
 LIB_NAME = lib$(APP_NAME)
 TEST_NAME = $(APP_NAME)-test
 
 CC = g++
 CFLAGS = -Wall -Wextra -Werror
-CPPFLAGS = -I $(SRC_DIR) -I $(THIRD_DIR) -I $(SDL_INCLUDE_PATH) -L $(SDL_LIB_PATH) -MP -MMD
+CPPFLAGS = -I $(SRC_DIR) -I $(THIRD_DIR) -I $(SDL_INCLUDE_PATH) -L $(SDL_LIB_PATH) -MP -MMD -DDIRECTORY=\"$(DIRECTORY)\"
 LDFLAGS = -D_REENTRANT
 LDLIBS = -Wl,-rpath=$(SDL_RPATH) -Wl,--enable-new-dtags -lSDL2 -lSDL2_image -lSDL2_gfx -lm -ldl -lpthread -lrt -Wl,--no-as-needed -ldl
 
@@ -25,7 +27,7 @@ TEST_PATH = $(BIN_DIR)/$(TEST_NAME)
 SDL_PATH = $(THIRD_DIR)/$(SDL_DIR)
 SDL_INCLUDE_PATH = $(SDL_PATH)/$(SDL_INCLUDE_DIR)
 SDL_LIB_PATH = $(SDL_PATH)/$(SDL_LIB_DIR)
-SDL_RPATH = $(shell pwd)/$(SDL_LIB_PATH)
+SDL_RPATH = $(DIRECTORY)/$(SDL_LIB_PATH)
 
 CTEST_PATH = $(THIRD_DIR)/ctest.h
 
@@ -65,6 +67,7 @@ $(OBJ_DIR)/%.o: %.c
 	$(CC) -c $(CFLAGS) $(CPPFLAGS) $< -o $@
 
 .PHONY: clean
+
 clean:
 	$(RM) $(APP_PATH) $(LIB_PATH)
 	find $(OBJ_DIR) -name '*.o' -exec $(RM) '{}' \;
