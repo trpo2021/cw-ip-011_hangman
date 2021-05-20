@@ -81,4 +81,6 @@ static const int ALPHABET_SIZE = 26;
 static const char ASCII_START = 'A';
 static const char ASCII_END = 'Z';
 static const char ASCII_CAPS_DISLOC = 'a' - 'A';
-static const int SUCCESS_GAME = 7;
+static const int WIN = 7;
+static const int LOSE = 8;
+static const int EXIT = 9;

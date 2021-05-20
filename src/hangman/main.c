@@ -13,6 +13,8 @@ int main()
     SDL_Renderer* renderer = NULL;
     char word[MAX_WORD_SIZE] = "\0";
 
+    int game_state = LOSE;
+
 #ifdef DIRECTORY
 
     /**
@@ -26,7 +28,18 @@ int main()
     gibbet(START_COMMAND, &renderer, &window);
     readingfile(word);
 
-    game(&renderer, &window, word);
+    game_state = game(&renderer, &window, word, NULL);
+
+    system("clear");
+    if (game_state == WIN)
+        printf("Вы победили.\n");
+    else if (game_state == LOSE)
+        printf("Вы проиграли.\n");
+    else {
+        printf("ОШИБКА: Получен неверный код статуса игры: %d", game_state);
+        return game_state;
+    }
+    printf("Слово: %s\n\n", word);
 
     gibbet(CLOSE_COMMAND, &renderer, &window);
 

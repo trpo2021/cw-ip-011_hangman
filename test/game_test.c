@@ -1,5 +1,3 @@
-#include "test_constants.h"
-
 #include <libhangman/constants.h>
 #include <libhangman/game.h>
 #include <libhangman/readingfile.h>
@@ -14,8 +12,7 @@ CTEST(GAME, WRONG_WORD)
     char word[MAX_WORD_SIZE] = "Apple";
     char symbols[MAX_WORD_SIZE] = "QwErtYuIopAsd";
 
-    srand(time(NULL));
-    real_return = game(word, symbols);
+    real_return = game(NULL, NULL, word, symbols);
 
     ASSERT_EQUAL(LOSE, real_return);
 }
@@ -26,7 +23,7 @@ CTEST(GAME, RIGHT_WORD)
     char word[MAX_WORD_SIZE] = "Banana";
     char symbols[MAX_WORD_SIZE] = "bAnANa";
 
-    real_return = game(word, symbols);
+    real_return = game(NULL, NULL, word, symbols);
 
     ASSERT_EQUAL(WIN, real_return);
 }
@@ -46,7 +43,7 @@ CTEST(GAME, NOT_LETTERS)
 
     symbols[MAX_WORD_SIZE - 1] = HIDDEN_SYMBOL;
 
-    real_return = game(word, symbols);
+    real_return = game(NULL, NULL, word, symbols);
 
     ASSERT_EQUAL(EXIT, real_return);
 }

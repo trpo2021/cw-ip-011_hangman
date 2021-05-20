@@ -6,8 +6,10 @@
  * Здесь происходят основные действия игры.
  * Для теста нужно передать symbols.
  * @param renderer Двойной адрес рендера.
+ * При тесте желательно передать NULL.
  *
  * @param window Двойной адрес окна.
+ * При тесте желательно передать NULL.
  *
  * @param word Ссылка на массив слова,
  * которое нужно отгадать.
@@ -17,22 +19,13 @@
  * Используется для тестирования. Вне теста
  * передавать NULL.
  *
- * @return SUCCESS_GAME
- *
- * При тесте:
- * WIN при победе,
+ * @return WIN при победе,
  * LOSE при проигрыше,
- * LEAVE_TOO_SOON при преждевременном
+ * EXIT при преждевременном
  * прекращении работы.
- * Значения им присваиваются в константах теста.
  */
-
-#ifndef TEST
-
-int game(SDL_Renderer** renderer, SDL_Window** window, char* word);
-
-#else
-
-int game(char* word, char* symbols);
-
-#endif
+int game(
+        SDL_Renderer** renderer,
+        SDL_Window** window,
+        char* word,
+        char* symbols);

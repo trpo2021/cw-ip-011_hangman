@@ -5,18 +5,8 @@
 
 #include <string.h>
 
-#ifndef TEST
-
-int game(SDL_Renderer** renderer, SDL_Window** window, char* word)
-
-#else
-
-#include <../test/test_constants.h>
-
-int game(char* word, char* symbols)
-
-#endif
-
+int game(
+        SDL_Renderer** renderer, SDL_Window** window, char* word, char* symbols)
 {
     int attempt = 0, i, symbol_found = 0, symbol_repeat = 0;
     int str_equal;
@@ -27,11 +17,7 @@ int game(char* word, char* symbols)
     char alphabet[ALPHABET_SIZE];
     int alphabet_loc;
 
-#ifdef TEST
-
     int symbol_n = 0;
-
-#endif
 
     // Пишем слово в маленьком регистре.
     for (i = 0; i < (int)strlen(word); i++)
@@ -49,41 +35,41 @@ int game(char* word, char* symbols)
     alphabet[i] = '\0';
 
     while (attempt != MAX_FAIL) {
-#ifndef TEST
+        /**
+         * При symbols == NULL выполнять обычную игру.
+         * При symbols != NULL выполнять тест.
+         */
+        if (symbols == NULL) {
+            system("clear");
 
-        system("clear");
+            printf("Угадайте слово: %s\n\n", word_hidden);
+            printf("Введите букву английского алфавита.\n");
+            printf("Вы можете написать сразу часть слова.\n\n");
+            printf("Неверных попыток: %d\n", attempt);
+            printf("Осталось попыток: %d\n\n", MAX_FAIL - attempt);
 
-        printf("Угадайте слово: %s\n\n", word_hidden);
-        printf("Введите букву английского алфавита.\n\n");
-        printf("Неверных попыток: %d\n", attempt);
-        printf("Осталось попыток: %d\n\n", MAX_FAIL - attempt);
-
-        if (symbol_repeat) {
-            printf("Вы уже вводили эту букву.\n\n");
-            symbol_repeat = 0;
+            if (symbol_repeat) {
+                printf("Вы уже вводили эту букву.\n\n");
+                symbol_repeat = 0;
+            }
         }
-
-#endif
 
         // Проверка правильности буквы.
         while (1) {
-#ifndef TEST
+            if (symbols == NULL) {
+                while ((symbol = getchar()) == '\n')
+                    ;
 
-            while ((symbol = getchar()) == '\n')
-                ;
-
-#else
-
-            if (symbol_n < (int)strlen(symbols))
-                symbol = symbols[symbol_n++];
-            /**
-             * Использовать "спрятанный символ"
-             * для преждевременного прекращения теста.
-             */
-            if (symbol == HIDDEN_SYMBOL)
-                return EXIT;
-
-#endif
+            } else {
+                if (symbol_n < (int)strlen(symbols))
+                    symbol = symbols[symbol_n++];
+                /**
+                 * Использовать "спрятанный символ"
+                 * для преждевременного прекращения теста.
+                 */
+                if (symbol == HIDDEN_SYMBOL)
+                    return EXIT;
+            }
 
             if (((symbol <= ASCII_END) && (symbol >= ASCII_START))
                 || ((symbol <= ASCII_END + ASCII_CAPS_DISLOC)
@@ -114,11 +100,9 @@ int game(char* word, char* symbols)
         if (!symbol_found && !symbol_repeat) {
             attempt++;
 
-#ifndef TEST
+            if (symbols == NULL)
 
-            gibbet(attempt, renderer, window);
-
-#endif
+                gibbet(attempt, renderer, window);
         }
 
         symbol_found = 0;
@@ -127,22 +111,7 @@ int game(char* word, char* symbols)
             break;
     }
 
-#ifndef TEST
-
-    system("clear");
-    if (str_equal)
-        printf("Вы победили.\n");
-    else
-        printf("Вы проиграли.\n");
-    printf("Слово: %s\n", word);
-
-    return SUCCESS_GAME;
-
-#else
-
     if (str_equal)
         return WIN;
     return LOSE;
-
-#endif
 }
