@@ -26,7 +26,7 @@ int main()
 #endif
 
     gibbet(START_COMMAND, &renderer, &window);
-    readingfile(word);
+    read_random_word(word);
 
     game_state = game(&renderer, &window, word, NULL);
 
