@@ -5,42 +5,50 @@
 #include <string.h>
 #include <time.h>
 
-int readingfile(char* s)
+int count_words(FILE* p)
+{
+    char a;
+    int count = 1;
+    rewind(p);
+    while ((a = getc(p)) != EOF)
+        if (a == ' ')
+            count++;
+    return count;
+}
+
+void read_nth_word(FILE* p, char* s, int n)
+{
+    char a;
+    char word[MAX_WORD_SIZE];
+    int i = 1;
+    rewind(p);
+    while (i != n) {
+        a = getc(p);
+        if (a == ' ')
+            i++;
+    }
+    i = 0;
+    while ((a = getc(p)) != EOF) {
+        if (a == ' ')
+            break;
+        word[i] = a;
+        i++;
+    }
+    word[i] = '\0';
+    strcpy(s, word);
+}
+
+int read_random_word(char* s)
 {
     FILE* p;
+    int count, n;
     srand(time(NULL));
     p = fopen(FILE_PATH, "r");
     if (p == NULL)
         return FILE_NOT_FOUND;
-    char a;
-    int num = 0, i, j;
-    while ((a = getc(p)) != EOF)
-        if (a == ' ')
-            num++;
-    num++;
-    char** words;
-    words = (char**)malloc(num * sizeof(char*));
-    for (i = 0; i < num; i++)
-        words[i] = (char*)malloc(MAX_WORD_SIZE * sizeof(char));
-    rewind(p);
-    i = j = 0;
-    while ((a = getc(p)) != EOF) {
-        if (a == ' ') {
-            words[i][j] = '\0';
-            i++;
-            j = 0;
-            (a = getc(p));
-        }
-        if (a == '\n')
-            (a = getc(p));
-        words[i][j] = a;
-        j++;
-    }
-    words[i][j] = '\0';
+    count = count_words(p);
+    n = 1 + rand() % count;
+    read_nth_word(p, s, n);
     fclose(p);
-    strcpy(s, words[rand() % num]);
-    for (i = 0; i < num; i++)
-        free(words[i]);
-    free(words);
     return SUCCES_RF;
 }

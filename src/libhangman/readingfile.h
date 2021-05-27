@@ -1,3 +1,3 @@
 #pragma once
 
-int readingfile(char* s);
+int read_random_word(char* s);
