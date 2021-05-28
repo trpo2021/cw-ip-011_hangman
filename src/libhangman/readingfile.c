@@ -1,5 +1,6 @@
 #include "readingfile.h"
 #include "constants.h"
+#include "filecheck.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -41,14 +42,17 @@ void read_nth_word(FILE* p, char* s, int n)
 int read_random_word(char* s)
 {
     FILE* p;
-    int count, n;
-    srand(time(NULL));
+    int count, n, code;
     p = fopen(FILE_PATH, "r");
+    code = check(p);
+    if (code != SUCCESS)
+        return code;
+    srand(time(NULL));
     if (p == NULL)
         return FILE_NOT_FOUND;
     count = count_words(p);
     n = 1 + rand() % count;
     read_nth_word(p, s, n);
     fclose(p);
-    return SUCCES_RF;
+    return SUCCESS;
 }

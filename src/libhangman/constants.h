@@ -73,14 +73,33 @@ static const int BLUE_BACK = 0;
 static const int ALPHA_BACK = 0;
 
 static const char FILE_PATH[] = "words.txt";
-static const int MAX_WORD_SIZE = 20;
-static const int SUCCES_RF = 5;
+static const int MAX_WORD_SIZE = 41;
+
+static const int SUCCESS = 5;
 static const int FILE_NOT_FOUND = 6;
+static const int EMPTY_FILE = 7;
+static const int SPACE_IN_BEGIN = 8;
+static const int DOUBLE_SPACE = 9;
+static const int SPACE_IN_END = 10;
+static const int FOUND_WRONG_CHAR = 11;
+static const int WORD_IS_TOO_BIG = 12;
+
+static const int CYR_FIRST_BYTE_0 = 0xD0;
+static const int CYR_FIRST_BYTE_1 = 0xD1;
+static const int CYR_START_0 = 144;
+static const int CYR_START_1 = 160;
+static const int CYR_END_0 = 159;
+static const int CYR_END = 175;
+static const int CYR_CAPS_DISLOC_0 = 176 - CYR_START_0;
+static const int CYR_CAPS_DISLOC_1 = 128 - CYR_START_1;
+static const int CYR_YO_UPPERCASE = 129;
+static const int CYR_YO_LOWERCASE = 145;
 
 static const int ALPHABET_SIZE = 26;
 static const char ASCII_START = 'A';
 static const char ASCII_END = 'Z';
 static const char ASCII_CAPS_DISLOC = 'a' - 'A';
-static const int WIN = 7;
-static const int LOSE = 8;
-static const int EXIT = 9;
+
+static const int WIN = 13;
+static const int LOSE = 14;
+static const int EXIT = 15;
