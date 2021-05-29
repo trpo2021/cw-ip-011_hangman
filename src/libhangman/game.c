@@ -31,7 +31,7 @@ int game(
     int symbol_n = 0;
 
     // Пишем слово в маленьком регистре.
-    for (i = 0; i < (symbol_n = (int)strlen(word)); i += 2) {
+    for (i = 0; i < (int)strlen(word); i += 2) {
         if ((word[i + 1] >= CYR_START_0 - BYTE_SIZE)
             && (word[i + 1] <= CYR_END_0 - BYTE_SIZE)) {
             word[i + 1] += CYR_CAPS_DISLOC_0;
