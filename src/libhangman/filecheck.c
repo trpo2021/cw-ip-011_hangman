@@ -44,7 +44,7 @@ int check_symbol(FILE* file)
             continue;
         if (c == CYR_FIRST_BYTE_0) {
             c_2nd_byte = getc(file);
-            if (c_2nd_byte >= CYR_START_0 && c_2nd_byte <= CYR_END)
+            if (c_2nd_byte >= CYR_START_0 && c_2nd_byte <= CYR_END_UPPERCASE)
                 continue;
             if (c_2nd_byte >= CYR_START_0 + CYR_CAPS_DISLOC_0
                 && c_2nd_byte <= CYR_END_0 + CYR_CAPS_DISLOC_0)
@@ -54,10 +54,10 @@ int check_symbol(FILE* file)
             return FOUND_WRONG_CHAR;
         } else if (c == CYR_FIRST_BYTE_1) {
             c_2nd_byte = getc(file);
-            if (c_2nd_byte >= CYR_START_1 && c_2nd_byte <= CYR_END)
+            if (c_2nd_byte >= CYR_START_1 && c_2nd_byte <= CYR_END_UPPERCASE)
                 continue;
             if (c_2nd_byte >= CYR_START_1 + CYR_CAPS_DISLOC_1
-                && c_2nd_byte <= CYR_END + CYR_CAPS_DISLOC_1)
+                && c_2nd_byte <= CYR_END_UPPERCASE + CYR_CAPS_DISLOC_1)
                 continue;
             if (c_2nd_byte == CYR_YO_LOWERCASE)
                 continue;

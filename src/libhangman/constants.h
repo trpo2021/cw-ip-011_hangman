@@ -84,16 +84,17 @@ static const int SPACE_IN_END = 10;
 static const int FOUND_WRONG_CHAR = 11;
 static const int WORD_IS_TOO_BIG = 12;
 
+static const int BYTE_SIZE = 256;
 static const int CYR_FIRST_BYTE_0 = 0xD0;
 static const int CYR_FIRST_BYTE_1 = 0xD1;
-static const int CYR_START_0 = 144;
-static const int CYR_START_1 = 160;
-static const int CYR_END_0 = 159;
-static const int CYR_END = 175;
-static const int CYR_CAPS_DISLOC_0 = 176 - CYR_START_0;
-static const int CYR_CAPS_DISLOC_1 = 128 - CYR_START_1;
-static const int CYR_YO_UPPERCASE = 129;
-static const int CYR_YO_LOWERCASE = 145;
+static const int CYR_START_0 = 0x90;
+static const int CYR_START_1 = 0xA0;
+static const int CYR_END_0 = 0x9F;
+static const int CYR_END_UPPERCASE = 0xAF;
+static const int CYR_CAPS_DISLOC_0 = 0xB0 - CYR_START_0;
+static const int CYR_CAPS_DISLOC_1 = 0x80 - CYR_START_1;
+static const int CYR_YO_UPPERCASE = 0x81;
+static const int CYR_YO_LOWERCASE = 0x91;
 
 static const int ALPHABET_SIZE = 26;
 static const char ASCII_START = 'A';

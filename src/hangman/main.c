@@ -9,11 +9,11 @@
 
 int main()
 {
-    // SDL_Window* window = NULL;
-    // SDL_Renderer* renderer = NULL;
+    SDL_Window* window = NULL;
+    SDL_Renderer* renderer = NULL;
     char word[MAX_WORD_SIZE] = "\0";
 
-    // int game_state = LOSE;
+    int game_state = LOSE;
 
     int status_code = SUCCESS;
 
@@ -56,21 +56,21 @@ int main()
         return status_code;
     }
 
-    /* gibbet(START_COMMAND, &renderer, &window);
+    gibbet(START_COMMAND, &renderer, &window);
 
-         game_state = game(&renderer, &window, word, NULL);
+    game_state = game(&renderer, &window, word, NULL);
 
-         system("clear");
-         if (game_state == WIN)
-             printf("Вы победили.\n");
-         else if (game_state == LOSE)
-             printf("Вы проиграли.\n");
-         else {
-             printf("ОШИБКА: Получен неверный код статуса игры: %d",
-       game_state); return game_state;
-         }
+    system("clear");
+    if (game_state == WIN)
+        printf("Вы победили.\n");
+    else if (game_state == LOSE)
+        printf("Вы проиграли.\n");
+    else {
+        printf("ОШИБКА: Получен неверный код статуса игры: %d", game_state);
+        return game_state;
+    }
 
-         gibbet(CLOSE_COMMAND, &renderer, &window);
-     */
+    gibbet(CLOSE_COMMAND, &renderer, &window);
+
     return 0;
 }
