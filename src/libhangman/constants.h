@@ -85,7 +85,6 @@ static const int FOUND_WRONG_CHAR = 11;
 static const int WORD_IS_TOO_BIG = 12;
 
 static const int CYR_BYTE_COUNT = 2;
-static const int BYTE_SIZE = 256;
 static const int CYR_FIRST_BYTE_0 = 0xD0;
 static const int CYR_FIRST_BYTE_1 = 0xD1;
 static const int CYR_START_0 = 0x90;

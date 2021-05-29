@@ -9,19 +9,19 @@ void word_in_lowercase(char* word)
 {
     int i;
     for (i = 0; i < (int)strlen(word); i += CYR_BYTE_COUNT) {
-        if ((word[i + 1] >= CYR_START_0 - BYTE_SIZE)
-            && (word[i + 1] <= CYR_END_0 - BYTE_SIZE)) {
+        if ((word[i + 1] >= (char)CYR_START_0)
+            && (word[i + 1] <= (char)CYR_END_0)) {
             word[i + 1] += CYR_CAPS_DISLOC_0;
         }
 
-        if ((word[i + 1] >= CYR_START_1 - BYTE_SIZE)
-            && (word[i + 1] <= CYR_END_UPPERCASE - BYTE_SIZE)) {
+        if ((word[i + 1] >= (char)CYR_START_1)
+            && (word[i + 1] <= (char)CYR_END_UPPERCASE)) {
             word[i] = CYR_FIRST_BYTE_1;
             word[i + 1] += CYR_CAPS_DISLOC_1;
         }
 
-        if ((word[i] == CYR_FIRST_BYTE_0 - BYTE_SIZE)
-            && word[i + 1] == CYR_YO_UPPERCASE - BYTE_SIZE) {
+        if ((word[i] == (char)CYR_FIRST_BYTE_0)
+            && word[i + 1] == (char)CYR_YO_UPPERCASE) {
             word[i] = CYR_FIRST_BYTE_1;
             word[i + 1] = CYR_YO_LOWERCASE;
         }
@@ -35,8 +35,8 @@ void print_word_h(char word_hidden[MAX_WORD_SIZE][CYR_BYTE_COUNT])
         if (word_hidden[i][0] == HIDDEN_SYMBOL) {
             printf("%c", HIDDEN_SYMBOL);
         } else if (
-                (word_hidden[i][0] == CYR_FIRST_BYTE_0 - BYTE_SIZE)
-                || (word_hidden[i][0] == CYR_FIRST_BYTE_1 - BYTE_SIZE)) {
+                (word_hidden[i][0] == (char)CYR_FIRST_BYTE_0)
+                || (word_hidden[i][0] == (char)CYR_FIRST_BYTE_1)) {
             printf("%c%c", word_hidden[i][0], word_hidden[i][1]);
         }
     }
@@ -44,20 +44,20 @@ void print_word_h(char word_hidden[MAX_WORD_SIZE][CYR_BYTE_COUNT])
 
 int check_input(char symbol[CYR_BYTE_COUNT])
 {
-    if (symbol[0] == CYR_FIRST_BYTE_0 - BYTE_SIZE) {
+    if (symbol[0] == (char)CYR_FIRST_BYTE_0) {
         symbol[1] = getchar();
-        if (symbol[1] == CYR_YO_UPPERCASE - BYTE_SIZE)
+        if (symbol[1] == (char)CYR_YO_UPPERCASE)
             return 1;
-        if ((symbol[1] >= CYR_START_0 - BYTE_SIZE)
-            || (symbol[1] <= CYR_END_0 + CYR_CAPS_DISLOC_0 - BYTE_SIZE))
+        if ((symbol[1] >= (char)CYR_START_0)
+            || (symbol[1] <= (char)(CYR_END_0 + CYR_CAPS_DISLOC_0)))
             return 1;
     }
-    if (symbol[0] == CYR_FIRST_BYTE_1 - BYTE_SIZE) {
+    if (symbol[0] == (char)CYR_FIRST_BYTE_1) {
         symbol[1] = getchar();
-        if (symbol[1] == CYR_YO_LOWERCASE - BYTE_SIZE)
+        if (symbol[1] == (char)CYR_YO_LOWERCASE)
             return 1;
-        if ((symbol[1] >= CYR_START_1 + CYR_CAPS_DISLOC_1 - BYTE_SIZE)
-            || (symbol[1] <= CYR_END_UPPERCASE + CYR_CAPS_DISLOC_1 - BYTE_SIZE))
+        if ((symbol[1] >= (char)(CYR_START_1 + CYR_CAPS_DISLOC_1))
+            || (symbol[1] <= (char)(CYR_END_UPPERCASE + CYR_CAPS_DISLOC_1)))
             return 1;
     }
     return 0;
@@ -65,14 +65,14 @@ int check_input(char symbol[CYR_BYTE_COUNT])
 
 void letter_in_lowercase(char symbol[CYR_BYTE_COUNT])
 {
-    if (symbol[0] == CYR_FIRST_BYTE_0 - BYTE_SIZE) {
-        if (symbol[1] == CYR_YO_UPPERCASE - BYTE_SIZE) {
+    if (symbol[0] == (char)CYR_FIRST_BYTE_0) {
+        if (symbol[1] == (char)CYR_YO_UPPERCASE) {
             symbol[0] = CYR_FIRST_BYTE_1;
             symbol[1] = CYR_YO_LOWERCASE;
         } else if (
-                (symbol[1] >= CYR_START_0 - BYTE_SIZE)
-                && (symbol[1] <= CYR_END_UPPERCASE - BYTE_SIZE)) {
-            if (symbol[1] >= CYR_START_1 - BYTE_SIZE) {
+                (symbol[1] >= (char)CYR_START_0)
+                && (symbol[1] <= (char)CYR_END_UPPERCASE)) {
+            if (symbol[1] >= (char)CYR_START_1) {
                 symbol[0] = CYR_FIRST_BYTE_1;
                 symbol[1] += CYR_CAPS_DISLOC_1;
             } else
@@ -88,7 +88,6 @@ void check_correct(
         int* symbol_found)
 {
     int i;
-    int alphabet_loc;
     *symbol_found = 0;
 
     for (i = 0; i < (int)strlen(word); i += CYR_BYTE_COUNT) {
@@ -109,17 +108,17 @@ void check_repeat(
     int alphabet_loc;
     *symbol_repeat = 0;
 
-    if (symbol[0] == CYR_FIRST_BYTE_0 - BYTE_SIZE) {
-        alphabet_loc = symbol[1] + BYTE_SIZE - ALPHABET_D0_DISLOC;
+    if (symbol[0] == (char)CYR_FIRST_BYTE_0) {
+        alphabet_loc = (unsigned char)symbol[1] - ALPHABET_D0_DISLOC;
         if (alphabet[alphabet_loc] != HIDDEN_SYMBOL)
             *symbol_repeat = 1;
         else
             alphabet[alphabet_loc] = 1;
     } else {
-        if (symbol[1] == CYR_YO_LOWERCASE - BYTE_SIZE) {
+        if (symbol[1] == (char)CYR_YO_LOWERCASE) {
             alphabet_loc = CYR_YO_LOWERCASE - ALPHABET_YO_DISLOC;
         } else {
-            alphabet_loc = (int)(symbol[1]) + BYTE_SIZE - ALPHABET_D1_DISLOC;
+            alphabet_loc = (unsigned char)symbol[1] - ALPHABET_D1_DISLOC;
         }
         if (alphabet[alphabet_loc] != HIDDEN_SYMBOL)
             *symbol_repeat = 1;
