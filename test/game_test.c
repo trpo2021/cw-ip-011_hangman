@@ -10,7 +10,7 @@ CTEST(GAME, NOT_LETTERS)
 {
     const char symbols_example[] = ";'.[)*&$123465789";
     int real_return;
-    char word[MAX_WORD_SIZE] = "IsThisASymbol";
+    char word[MAX_WORD_SIZE] = "АЭтоСиивол";
     char symbols[MAX_WORD_SIZE] = "\0";
 
     int i, symb_exmpl_len = (int)strlen(symbols_example);
@@ -31,8 +31,8 @@ CTEST(GAME, NOT_LETTERS)
 CTEST(GAME, WRONG_WORD)
 {
     int real_return;
-    char word[MAX_WORD_SIZE] = "Apple";
-    char symbols[MAX_WORD_SIZE] = "QwErtYuIopAsd";
+    char word[MAX_WORD_SIZE] = "Яблоко";
+    char symbols[MAX_WORD_SIZE] = "ТочноНеТоСловоДа";
 
     real_return = game(NULL, NULL, word, symbols);
 
@@ -42,8 +42,8 @@ CTEST(GAME, WRONG_WORD)
 CTEST(GAME_RIGHT_WORD, LOWERCASE)
 {
     int real_return;
-    char word[MAX_WORD_SIZE] = "Banana";
-    char symbols[MAX_WORD_SIZE] = "banana";
+    char word[MAX_WORD_SIZE] = "Банан";
+    char symbols[MAX_WORD_SIZE] = "банан";
 
     real_return = game(NULL, NULL, word, symbols);
 
@@ -53,8 +53,8 @@ CTEST(GAME_RIGHT_WORD, LOWERCASE)
 CTEST(GAME_RIGHT_WORD, UPPERCASE)
 {
     int real_return;
-    char word[MAX_WORD_SIZE] = "Grapes";
-    char symbols[MAX_WORD_SIZE] = "GRAPES";
+    char word[MAX_WORD_SIZE] = "Виноград";
+    char symbols[MAX_WORD_SIZE] = "ВИНОГРАД";
 
     real_return = game(NULL, NULL, word, symbols);
 
@@ -64,15 +64,24 @@ CTEST(GAME_RIGHT_WORD, UPPERCASE)
 CTEST(GAME_RIGHT_WORD, RANDCASE)
 {
     int real_return;
-    char word[MAX_WORD_SIZE] = "Pomegranate";
-    char symbols[MAX_WORD_SIZE] = "pomegranate";
+    char word[MAX_WORD_SIZE] = "Гранат";
+    char symbols[MAX_WORD_SIZE] = "гранат";
 
     int i, word_len = (int)(strlen(word));
 
+    int change_case = 0;
+
     srand(time(NULL));
 
-    for (i = 0; i < word_len; i++) {
-        symbols[i] -= (rand() % 2) * ASCII_CAPS_DISLOC;
+    for (i = 0; i < word_len; i += CYR_BYTE_COUNT) {
+        change_case = (rand() % 2);
+        if (symbols[i] == (char)CYR_FIRST_BYTE_0)
+            symbols[i + 1] -= change_case * CYR_CAPS_DISLOC_0;
+        else {
+            if (change_case)
+                symbols[i] = CYR_FIRST_BYTE_0;
+            symbols[i + 1] -= change_case * CYR_CAPS_DISLOC_1;
+        }
     }
 
     real_return = game(NULL, NULL, word, symbols);
@@ -83,8 +92,8 @@ CTEST(GAME_RIGHT_WORD, RANDCASE)
 CTEST(GAME_RIGHT_WORD, LETTERS_NOT_IN_ORDER)
 {
     int real_return;
-    char word[MAX_WORD_SIZE] = "Murder";
-    char symbols[MAX_WORD_SIZE] = "redruM";
+    char word[MAX_WORD_SIZE] = "Убийство";
+    char symbols[MAX_WORD_SIZE] = "овтсйибУ";
 
     real_return = game(NULL, NULL, word, symbols);
 

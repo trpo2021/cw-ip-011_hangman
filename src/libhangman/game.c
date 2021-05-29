@@ -42,10 +42,13 @@ void print_word_h(char word_hidden[][CYR_BYTE_COUNT])
     }
 }
 
-int check_input(char* symbol)
+int check_input(char* symbol, char* symbols, int* symbol_n)
 {
     if (symbol[0] == (char)CYR_FIRST_BYTE_0) {
-        symbol[1] = getchar();
+        if (symbols == NULL)
+            symbol[1] = getchar();
+        else
+            symbol[1] = symbols[(*symbol_n)++];
         if (symbol[1] == (char)CYR_YO_UPPERCASE)
             return 1;
         if ((symbol[1] >= (char)CYR_START_0)
@@ -53,7 +56,10 @@ int check_input(char* symbol)
             return 1;
     }
     if (symbol[0] == (char)CYR_FIRST_BYTE_1) {
-        symbol[1] = getchar();
+        if (symbols == NULL)
+            symbol[1] = getchar();
+        else
+            symbol[1] = symbols[(*symbol_n)++];
         if (symbol[1] == (char)CYR_YO_LOWERCASE)
             return 1;
         if ((symbol[1] >= (char)(CYR_START_1 + CYR_CAPS_DISLOC_1))
@@ -198,7 +204,7 @@ int game(
                     return EXIT;
             }
 
-            if (check_input(symbol))
+            if (check_input(symbol, symbols, &symbol_n))
                 break;
         }
 
