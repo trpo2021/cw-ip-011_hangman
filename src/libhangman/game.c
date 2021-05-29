@@ -28,7 +28,7 @@ void word_in_lowercase(char* word)
     }
 }
 
-void print_word_h(char word_hidden[MAX_WORD_SIZE][CYR_BYTE_COUNT])
+void print_word_h(char word_hidden[][CYR_BYTE_COUNT])
 {
     int i;
     for (i = 0; i < MAX_WORD_SIZE; i++) {
@@ -42,7 +42,7 @@ void print_word_h(char word_hidden[MAX_WORD_SIZE][CYR_BYTE_COUNT])
     }
 }
 
-int check_input(char symbol[CYR_BYTE_COUNT])
+int check_input(char* symbol)
 {
     if (symbol[0] == (char)CYR_FIRST_BYTE_0) {
         symbol[1] = getchar();
@@ -63,7 +63,7 @@ int check_input(char symbol[CYR_BYTE_COUNT])
     return 0;
 }
 
-void letter_in_lowercase(char symbol[CYR_BYTE_COUNT])
+void letter_in_lowercase(char* symbol)
 {
     if (symbol[0] == (char)CYR_FIRST_BYTE_0) {
         if (symbol[1] == (char)CYR_YO_UPPERCASE) {
@@ -82,9 +82,9 @@ void letter_in_lowercase(char symbol[CYR_BYTE_COUNT])
 }
 
 void check_correct(
-        char word[MAX_WORD_SIZE],
-        char word_hidden[MAX_WORD_SIZE][CYR_BYTE_COUNT],
-        char symbol[CYR_BYTE_COUNT],
+        char* word,
+        char word_hidden[][CYR_BYTE_COUNT],
+        char* symbol,
         int* symbol_found)
 {
     int i;
@@ -100,10 +100,7 @@ void check_correct(
     }
 }
 
-void check_repeat(
-        char alphabet[ALPHABET_SIZE],
-        char symbol[CYR_BYTE_COUNT],
-        int* symbol_repeat)
+void check_repeat(char* alphabet, char* symbol, int* symbol_repeat)
 {
     int alphabet_loc;
     *symbol_repeat = 0;
@@ -127,9 +124,7 @@ void check_repeat(
     }
 }
 
-int cyr_strcmp(
-        char word[MAX_WORD_SIZE],
-        char word_hidden[MAX_WORD_SIZE][CYR_BYTE_COUNT])
+int cyr_strcmp(char* word, char word_hidden[][CYR_BYTE_COUNT])
 {
     int i, j;
     for (i = 0, j = 0; i < (int)(strlen(word)); i += CYR_BYTE_COUNT, j++) {
