@@ -17,7 +17,8 @@ Uint32 check_quit(Uint32 interval, void* param)
 void word_in_lowercase(char* word)
 {
     int i;
-    for (i = 0; i < (int)strlen(word); i += CYR_BYTE_COUNT) {
+    int word_len = (int)strlen(word);
+    for (i = 0; i < word_len; i += CYR_BYTE_COUNT) {
         if ((word[i + 1] >= (char)CYR_START_0)
             && (word[i + 1] <= (char)CYR_END_0)) {
             word[i + 1] += CYR_CAPS_DISLOC_0;
@@ -37,15 +38,13 @@ void word_in_lowercase(char* word)
     }
 }
 
-void print_word_h(char word_hidden[][CYR_BYTE_COUNT])
+void print_word_h(int word_hid_len, char word_hidden[][CYR_BYTE_COUNT])
 {
     int i;
-    for (i = 0; i < MAX_WORD_SIZE; i++) {
+    for (i = 0; i < word_hid_len; i++) {
         if (word_hidden[i][0] == HIDDEN_SYMBOL) {
             printf("%c", HIDDEN_SYMBOL);
-        } else if (
-                (word_hidden[i][0] == (char)CYR_FIRST_BYTE_0)
-                || (word_hidden[i][0] == (char)CYR_FIRST_BYTE_1)) {
+        } else {
             printf("%c%c", word_hidden[i][0], word_hidden[i][1]);
         }
     }
@@ -103,9 +102,10 @@ void check_correct(
         int* symbol_found)
 {
     int i;
+    int word_len = (int)strlen(word);
     *symbol_found = 0;
 
-    for (i = 0; i < (int)strlen(word); i += CYR_BYTE_COUNT) {
+    for (i = 0; i < word_len; i += CYR_BYTE_COUNT) {
         if ((word[i] == symbol[0]) && (word[i + 1] == symbol[1])
             && (word_hidden[i / CYR_BYTE_COUNT][0] == HIDDEN_SYMBOL)) {
             *symbol_found = 1;
@@ -161,6 +161,8 @@ int game(
 
     char alphabet[ALPHABET_SIZE];
 
+    int word_hid_len = (int)strlen(word) / CYR_BYTE_COUNT;
+
     int symbol_n = 0;
 
     int quit = 0;
@@ -190,7 +192,7 @@ int game(
     word_in_lowercase(word);
 
     // Инициализация маски слова.
-    for (i = 0; i < (int)strlen(word) / CYR_BYTE_COUNT; i++)
+    for (i = 0; i < word_hid_len; i++)
         word_hidden[i][0] = HIDDEN_SYMBOL;
     word_hidden[i][0] = '\0';
 
@@ -207,9 +209,9 @@ int game(
             system("clear");
 
             printf("Угадайте слово: ");
-            print_word_h(word_hidden);
+            print_word_h(word_hid_len, word_hidden);
             printf("\n\n");
-            printf("Введите букву английского алфавита.\n");
+            printf("Введите букву русского алфавита.\n");
             printf("Вы можете написать сразу часть слова.\n\n");
             printf("Неверных попыток: %d\n", attempt);
             printf("Осталось попыток: %d\n\n", MAX_FAIL - attempt);
