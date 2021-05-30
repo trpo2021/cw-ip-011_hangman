@@ -43,13 +43,18 @@ int main()
 
     system("clear");
     if (game_state == WIN)
-        printf("Вы победили.\n");
+        printf("Вы победили.");
     else if (game_state == LOSE)
-        printf("Вы проиграли.\n");
+        printf("Вы проиграли.");
+    else if (game_state == EXIT)
+        printf("Выходим...");
     else {
-        printf("ОШИБКА: Получен неверный код статуса игры: %d", game_state);
+        printf("ОШИБКА: Получен неизвестный код статуса игры: %d\n",
+               game_state);
         return game_state;
     }
+
+    printf("\n\nСлово: %s\n\n", word);
 
     gibbet(CLOSE_COMMAND, &renderer, &window);
 
