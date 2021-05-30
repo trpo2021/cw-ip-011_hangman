@@ -1,27 +1,35 @@
 #pragma once
 
+// Максимальное количество ошибок
 static const int MAX_FAIL = 6;
+// Обозначение спрятанного символа.
 static const char HIDDEN_SYMBOL = '#';
 
+//Ширина окна в пикселях.
 static const int WINDOW_WIDTH = 500;
+//Высота окна в пикселях.
 static const int WINDOW_HEIGHT = 800;
 
-static const int SCREEN_PART_MOVE_X
-        = 4; /* Насколько окно должно быть смещено от центра экрана.
+/* Насколько окно должно быть смещено от центра экрана.
                 4 для четверти экрана, 2 для половины.
                 Не рекоммендуется использовать значения меньше 3.
                 Чтобы запускать окно в центра, ставь значение -1. */
+static const int SCREEN_PART_MOVE_X = 4;
 static const int SCREEN_PART_MOVE_Y = -1;
 
+// Заголовок окна.
 static const char HANGMAN_TITLE[] = "HANGMAN";
+// Путь к иконке.
 static const char ICON_PATH[] = "./assets/icon.png";
 
+//Коды результата иницилизации SDL.
 static const int STATE_OK = 0;
 static const int ERROR_SDL_NOT_INIT = 1;
 static const int ERROR_DM_NOT_INIT = 2;
 static const int ERROR_WINDOW_NOT_INIT = 3;
 static const int ERROR_RENDER_NOT_INIT = 4;
 
+// Коды инициализации/отключения SDL.
 static const int START_COMMAND = 0;
 static const int CLOSE_COMMAND = 999;
 
@@ -32,9 +40,11 @@ static const int CLOSE_COMMAND = 999;
 static const int VIRTUAL_RES_X = 10;
 static const int VIRTUAL_RES_Y = 16;
 
+// Изменение размера виселицы.
 static const int GIB_RESIZE_LESS = 3;
 static const int GIB_RESIZE_MORE = 2;
 
+// Координаты частей виселицы и тела для отрисовки.
 static const int POST_X1 = WINDOW_WIDTH / VIRTUAL_RES_X;
 static const int POST_Y1 = WINDOW_HEIGHT / (VIRTUAL_RES_Y / 2);
 static const int POST_W
@@ -62,19 +72,23 @@ static const int BODY_RAD_X = GIB_RESIZE_MORE * HEAD_RAD / GIB_RESIZE_LESS;
 static const int BODY_RAD_Y = GIB_RESIZE_MORE * HEAD_RAD;
 static const int BODY_Y = HEAD_Y + HEAD_RAD + BODY_RAD_Y;
 
+//Цвет рисунка.
 static const int RED = 255;
 static const int GREEN = 255;
 static const int BLUE = 255;
 static const int ALPHA = 255;
 
+//Цвет фона.
 static const int RED_BACK = 0;
 static const int GREEN_BACK = 0;
 static const int BLUE_BACK = 0;
 static const int ALPHA_BACK = 0;
 
+// Путь к файлу и макс. размер слова.
 static const char FILE_PATH[] = "words.txt";
 static const int MAX_WORD_SIZE = 41;
 
+// Коды результата проверки файла.
 static const int SUCCESS = 5;
 static const int FILE_NOT_FOUND = 6;
 static const int EMPTY_FILE = 7;
@@ -84,6 +98,7 @@ static const int SPACE_IN_END = 10;
 static const int FOUND_WRONG_CHAR = 11;
 static const int WORD_IS_TOO_BIG = 12;
 
+// CYR - CYRILLIC
 static const int CYR_BYTE_COUNT = 2;
 static const int CYR_FIRST_BYTE_0 = 0xD0;
 static const int CYR_FIRST_BYTE_1 = 0xD1;
@@ -96,6 +111,7 @@ static const int CYR_CAPS_DISLOC_1 = 0x80 - CYR_START_1;
 static const int CYR_YO_UPPERCASE = 0x81;
 static const int CYR_YO_LOWERCASE = 0x91;
 
+//Русский алфавит для проверка повтора буквы.
 static const int ALPHABET_SIZE = 33;
 static const int ALPHABET_D0_DISLOC = CYR_START_0 + CYR_CAPS_DISLOC_0;
 static const int ALPHABET_D1_DISLOC
@@ -103,6 +119,8 @@ static const int ALPHABET_D1_DISLOC
 static const int ALPHABET_YO_DISLOC
         = CYR_START_0 - CYR_START_1 + CYR_YO_LOWERCASE;
 
+// Коды результата игры.
+// EXIT - преждевременный выход.
 static const int WIN = 13;
 static const int LOSE = 14;
 static const int EXIT = 15;
