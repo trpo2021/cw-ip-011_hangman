@@ -10,7 +10,7 @@ CTEST(GAME, NOT_LETTERS)
 {
     const char symbols_example[] = ";'.[)*&$123465789";
     int real_return;
-    char word[MAX_WORD_SIZE] = "АЭтоСиивол";
+    char word[MAX_WORD_SIZE] = "АЭтоСимвол";
     char symbols[MAX_WORD_SIZE] = "\0";
 
     int i, symb_exmpl_len = (int)strlen(symbols_example);
@@ -21,7 +21,7 @@ CTEST(GAME, NOT_LETTERS)
         symbols[i] = symbols_example[rand() % symb_exmpl_len];
     }
 
-    symbols[MAX_WORD_SIZE - 1] = HIDDEN_SYMBOL;
+    symbols[MAX_WORD_SIZE - 1] = EXIT_SYMBOL;
 
     real_return = game(NULL, NULL, word, symbols);
 

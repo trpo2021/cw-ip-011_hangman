@@ -5,10 +5,31 @@
 
 #include <stdio.h>
 
+void ignore_events()
+{
+    SDL_EventState(SDL_MOUSEMOTION, SDL_IGNORE);
+    SDL_EventState(SDL_MOUSEBUTTONDOWN, SDL_IGNORE);
+    SDL_EventState(SDL_MOUSEBUTTONUP, SDL_IGNORE);
+    SDL_EventState(SDL_MOUSEWHEEL, SDL_IGNORE);
+    SDL_EventState(SDL_KEYDOWN, SDL_IGNORE);
+    SDL_EventState(SDL_KEYUP, SDL_IGNORE);
+    SDL_EventState(SDL_WINDOWEVENT, SDL_IGNORE);
+}
+
+Uint32 check_quit(Uint32 interval, void* param)
+{
+    SDL_Event event;
+    while (SDL_PollEvent(&event) != 0)
+        if (event.type == SDL_QUIT)
+            *((int*)param) = 1;
+    return interval;
+}
+
 void word_in_lowercase(char* word)
 {
     int i;
-    for (i = 0; i < (int)strlen(word); i += CYR_BYTE_COUNT) {
+    int word_len = (int)strlen(word);
+    for (i = 0; i < word_len; i += CYR_BYTE_COUNT) {
         if ((word[i + 1] >= (char)CYR_START_0)
             && (word[i + 1] <= (char)CYR_END_0)) {
             word[i + 1] += CYR_CAPS_DISLOC_0;
@@ -28,15 +49,13 @@ void word_in_lowercase(char* word)
     }
 }
 
-void print_word_h(char word_hidden[][CYR_BYTE_COUNT])
+void print_word_h(int word_hid_len, char word_hidden[][CYR_BYTE_COUNT])
 {
     int i;
-    for (i = 0; i < MAX_WORD_SIZE; i++) {
+    for (i = 0; i < word_hid_len; i++) {
         if (word_hidden[i][0] == HIDDEN_SYMBOL) {
             printf("%c", HIDDEN_SYMBOL);
-        } else if (
-                (word_hidden[i][0] == (char)CYR_FIRST_BYTE_0)
-                || (word_hidden[i][0] == (char)CYR_FIRST_BYTE_1)) {
+        } else {
             printf("%c%c", word_hidden[i][0], word_hidden[i][1]);
         }
     }
@@ -94,9 +113,10 @@ void check_correct(
         int* symbol_found)
 {
     int i;
+    int word_len = (int)strlen(word);
     *symbol_found = 0;
 
-    for (i = 0; i < (int)strlen(word); i += CYR_BYTE_COUNT) {
+    for (i = 0; i < word_len; i += CYR_BYTE_COUNT) {
         if ((word[i] == symbol[0]) && (word[i + 1] == symbol[1])
             && (word_hidden[i / CYR_BYTE_COUNT][0] == HIDDEN_SYMBOL)) {
             *symbol_found = 1;
@@ -152,13 +172,34 @@ int game(
 
     char alphabet[ALPHABET_SIZE];
 
+    int word_hid_len = (int)strlen(word) / CYR_BYTE_COUNT;
+
     int symbol_n = 0;
+
+    int quit = 0;
+
+    Uint32 delay = 100;
+    SDL_TimerID timer_check_for_quit;
+
+    if (!symbols) {
+        // Игнорировать ненужные эвенты.
+        // Проверяться будет лишь эвент на выход.
+        ignore_events();
+
+        /**
+         * Создаём таймер, который каждые delay миллисекунд
+         * будет проверять, попытался ли пользователь закрыть
+         * приложение. Если да, то quit применяет значение 1,
+         * и программа завершается после ввода буквы.
+         */
+        timer_check_for_quit = SDL_AddTimer(delay, check_quit, (void*)(&quit));
+    }
 
     // Пишем слово в маленьком регистре.
     word_in_lowercase(word);
 
     // Инициализация маски слова.
-    for (i = 0; i < (int)strlen(word) / CYR_BYTE_COUNT; i++)
+    for (i = 0; i < word_hid_len; i++)
         word_hidden[i][0] = HIDDEN_SYMBOL;
     word_hidden[i][0] = '\0';
 
@@ -171,15 +212,15 @@ int game(
          * При symbols == NULL выполнять обычную игру.
          * При symbols != NULL выполнять тест.
          */
-
         if (symbols == NULL) {
             system("clear");
 
             printf("Угадайте слово: ");
-            print_word_h(word_hidden);
+            print_word_h(word_hid_len, word_hidden);
             printf("\n\n");
-            printf("Введите букву английского алфавита.\n");
+            printf("Введите букву русского алфавита.\n");
             printf("Вы можете написать сразу часть слова.\n\n");
+            printf("Для выхода введите %c.\n\n", EXIT_SYMBOL);
             printf("Неверных попыток: %d\n", attempt);
             printf("Осталось попыток: %d\n\n", MAX_FAIL - attempt);
 
@@ -196,12 +237,14 @@ int game(
             } else {
                 if (symbol_n < (int)strlen(symbols))
                     symbol[0] = symbols[symbol_n++];
-                /**
-                 * Использовать "спрятанный символ"
-                 * для преждевременного прекращения теста.
-                 */
-                if (symbol[0] == HIDDEN_SYMBOL)
+
+                if (symbol[0] == EXIT_SYMBOL)
                     return EXIT;
+            }
+
+            if ((quit || symbol[0] == EXIT_SYMBOL) && !symbols) {
+                SDL_RemoveTimer(timer_check_for_quit);
+                return EXIT;
             }
 
             if (check_input(symbol, symbols, &symbol_n))
