@@ -5,6 +5,17 @@
 
 #include <stdio.h>
 
+void ignore_events()
+{
+    SDL_EventState(SDL_MOUSEMOTION, SDL_IGNORE);
+    SDL_EventState(SDL_MOUSEBUTTONDOWN, SDL_IGNORE);
+    SDL_EventState(SDL_MOUSEBUTTONUP, SDL_IGNORE);
+    SDL_EventState(SDL_MOUSEWHEEL, SDL_IGNORE);
+    SDL_EventState(SDL_KEYDOWN, SDL_IGNORE);
+    SDL_EventState(SDL_KEYUP, SDL_IGNORE);
+    SDL_EventState(SDL_WINDOWEVENT, SDL_IGNORE);
+}
+
 Uint32 check_quit(Uint32 interval, void* param)
 {
     SDL_Event event;
@@ -173,11 +184,7 @@ int game(
     if (!symbols) {
         // Игнорировать ненужные эвенты.
         // Проверяться будет лишь эвент на выход.
-        SDL_EventState(SDL_MOUSEMOTION, SDL_IGNORE);
-        SDL_EventState(SDL_MOUSEBUTTONDOWN, SDL_IGNORE);
-        SDL_EventState(SDL_MOUSEBUTTONUP, SDL_IGNORE);
-        SDL_EventState(SDL_KEYDOWN, SDL_IGNORE);
-        SDL_EventState(SDL_KEYUP, SDL_IGNORE);
+        ignore_events();
 
         /**
          * Создаём таймер, который каждые delay миллисекунд
