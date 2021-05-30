@@ -5,7 +5,12 @@
 
 #include <SDL2/SDL.h>
 
+#ifdef DIRECTORY
+
+// Используется только для chdir
 #include <unistd.h>
+
+#endif
 
 int main()
 {
@@ -13,7 +18,9 @@ int main()
     SDL_Renderer* renderer = NULL;
     char word[MAX_WORD_SIZE] = "\0";
 
-    int game_state = LOSE;
+    int game_state = EXIT;
+
+    int status_code = SUCCESS;
 
 #ifdef DIRECTORY
 
@@ -25,21 +32,29 @@ int main()
 
 #endif
 
+    status_code = read_random_word(word);
+    print_check_res(status_code);
+    if (status_code != SUCCESS)
+        return status_code;
+
     gibbet(START_COMMAND, &renderer, &window);
-    read_random_word(word);
 
     game_state = game(&renderer, &window, word, NULL);
 
     system("clear");
     if (game_state == WIN)
-        printf("Вы победили.\n");
+        printf("Вы победили.");
     else if (game_state == LOSE)
-        printf("Вы проиграли.\n");
+        printf("Вы проиграли.");
+    else if (game_state == EXIT)
+        printf("Выходим...");
     else {
-        printf("ОШИБКА: Получен неверный код статуса игры: %d", game_state);
+        printf("ОШИБКА: Получен неизвестный код статуса игры: %d\n",
+               game_state);
         return game_state;
     }
-    printf("Слово: %s\n\n", word);
+
+    printf("\n\nСлово: %s\n\n", word);
 
     gibbet(CLOSE_COMMAND, &renderer, &window);
 
