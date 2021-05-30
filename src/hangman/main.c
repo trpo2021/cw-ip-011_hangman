@@ -56,6 +56,12 @@ int main()
     if (game_state != EXIT)
         printf("\n\nСлово: %s\n\n", word);
 
+    printf("Нажмите любую клавишу для продолжения...");
+
+    // Избавление от \n, оставленного предыдущим getchar'ом.
+    getchar();
+    getchar();
+
     gibbet(CLOSE_COMMAND, &renderer, &window);
 
     return 0;
