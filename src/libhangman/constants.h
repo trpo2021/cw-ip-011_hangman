@@ -44,33 +44,6 @@ const int VIRTUAL_RES_Y = 16;
 const int GIB_RESIZE_LESS = 3;
 const int GIB_RESIZE_MORE = 2;
 
-// Координаты частей виселицы и тела для отрисовки.
-const int POST_X1 = WINDOW_WIDTH / VIRTUAL_RES_X;
-const int POST_Y1 = WINDOW_HEIGHT / (VIRTUAL_RES_Y / 2);
-const int POST_W
-        = GIB_RESIZE_MORE * WINDOW_WIDTH / (VIRTUAL_RES_X * GIB_RESIZE_LESS);
-const int POST_H = 7 * WINDOW_HEIGHT / (VIRTUAL_RES_Y / 2);
-const int POST_X2 = POST_X1 + POST_W;
-const int POST_Y2 = POST_Y1 + POST_H;
-
-const int PLANK_X1 = POST_X2;
-const int PLANK_Y1 = POST_Y1;
-const int PLANK_W = 3 * WINDOW_WIDTH / (VIRTUAL_RES_X / 2)
-        + (WINDOW_WIDTH / VIRTUAL_RES_X - POST_W);
-const int PLANK_H
-        = GIB_RESIZE_MORE * WINDOW_HEIGHT / (VIRTUAL_RES_Y * GIB_RESIZE_LESS);
-const int PLANK_X2 = PLANK_X1 + PLANK_W;
-const int PLANK_Y2 = PLANK_Y1 + PLANK_H;
-
-const int HEAD_X = PLANK_X1 + GIB_RESIZE_MORE * PLANK_W / GIB_RESIZE_LESS;
-const int HEAD_Y = PLANK_Y2 + 4 * WINDOW_HEIGHT / VIRTUAL_RES_Y;
-const int HEAD_RAD = WINDOW_HEIGHT / VIRTUAL_RES_Y;
-
-const int BODY_X = HEAD_X;
-const int BODY_RAD_X = GIB_RESIZE_MORE * HEAD_RAD / GIB_RESIZE_LESS;
-const int BODY_RAD_Y = GIB_RESIZE_MORE * HEAD_RAD;
-const int BODY_Y = HEAD_Y + HEAD_RAD + BODY_RAD_Y;
-
 //Цвет рисунка.
 const int RED = 255;
 const int GREEN = 255;
