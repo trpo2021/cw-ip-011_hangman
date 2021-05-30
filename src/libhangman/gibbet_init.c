@@ -18,7 +18,7 @@ int initialize(SDL_Renderer** renderer, SDL_Window** window)
     SDL_Surface* icon;  // Иконка окна с виселицей.
     int window_disloc_x,
             window_disloc_y; // Отколнение окна от центра экрана в пикселях
-    if (SDL_Init(SDL_INIT_VIDEO) != 0) {
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) != 0) {
         // Инициализация SDL, проверка на ошибку.
         SDL_Log("SDL_Init failed: %s", SDL_GetError());
         return ERROR_SDL_NOT_INIT;

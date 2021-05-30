@@ -5,6 +5,15 @@
 
 #include <stdio.h>
 
+Uint32 check_quit(Uint32 interval, void* param)
+{
+    SDL_Event event;
+    while (SDL_PollEvent(&event) != 0)
+        if (event.type == SDL_QUIT)
+            *((int*)param) = 1;
+    return interval;
+}
+
 void word_in_lowercase(char* word)
 {
     int i;
@@ -154,6 +163,29 @@ int game(
 
     int symbol_n = 0;
 
+    int quit = 0;
+
+    Uint32 delay = 100;
+    SDL_TimerID timer_check_for_quit;
+
+    if (!symbols) {
+        // Игнорировать ненужные эвенты.
+        // Проверяться будет лишь эвент на выход.
+        SDL_EventState(SDL_MOUSEMOTION, SDL_IGNORE);
+        SDL_EventState(SDL_MOUSEBUTTONDOWN, SDL_IGNORE);
+        SDL_EventState(SDL_MOUSEBUTTONUP, SDL_IGNORE);
+        SDL_EventState(SDL_KEYDOWN, SDL_IGNORE);
+        SDL_EventState(SDL_KEYUP, SDL_IGNORE);
+
+        /**
+         * Создаём таймер, который каждые delay миллисекунд
+         * будет проверять, попытался ли пользователь закрыть
+         * приложение. Если да, то quit применяет значение 1,
+         * и программа завершается после ввода буквы.
+         */
+        timer_check_for_quit = SDL_AddTimer(delay, check_quit, (void*)(&quit));
+    }
+
     // Пишем слово в маленьком регистре.
     word_in_lowercase(word);
 
@@ -171,7 +203,6 @@ int game(
          * При symbols == NULL выполнять обычную игру.
          * При symbols != NULL выполнять тест.
          */
-
         if (symbols == NULL) {
             system("clear");
 
@@ -206,6 +237,11 @@ int game(
 
             if (check_input(symbol, symbols, &symbol_n))
                 break;
+        }
+
+        if (quit && !symbols) {
+            SDL_RemoveTimer(timer_check_for_quit);
+            return EXIT;
         }
 
         // Запись буквы в маленьком регистре.
