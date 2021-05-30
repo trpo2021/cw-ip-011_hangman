@@ -37,18 +37,12 @@ void build_gibbet(SDL_Renderer* renderer)
             ALPHA);
     // Верёвка.
     SDL_RenderDrawLine(renderer, HEAD_X, PLANK_Y2, HEAD_X, HEAD_Y);
-    SDL_Delay(100);
-    SDL_RenderPresent(renderer);
 }
 
 void add_head(SDL_Renderer* renderer)
 {
-    SDL_SetRenderDrawColor(
-            renderer, RED_BACK, GREEN_BACK, BLUE_BACK, ALPHA_BACK);
     filledCircleRGBA(
             renderer, HEAD_X, HEAD_Y, HEAD_RAD, RED, GREEN, BLUE, ALPHA);
-    SDL_Delay(100);
-    SDL_RenderPresent(renderer);
 }
 
 void add_body(SDL_Renderer* renderer)
@@ -63,8 +57,6 @@ void add_body(SDL_Renderer* renderer)
             GREEN,
             BLUE,
             ALPHA);
-    SDL_Delay(100);
-    SDL_RenderPresent(renderer);
 }
 
 void add_hand1(SDL_Renderer* renderer)
@@ -76,8 +68,6 @@ void add_hand1(SDL_Renderer* renderer)
     handY2 = handY1 + 2 * HEAD_RAD;
     SDL_SetRenderDrawColor(renderer, RED, GREEN, BLUE, ALPHA);
     SDL_RenderDrawLine(renderer, handX1, handY1, handX2, handY2);
-    SDL_Delay(100);
-    SDL_RenderPresent(renderer);
 }
 
 void add_hand2(SDL_Renderer* renderer)
@@ -89,8 +79,6 @@ void add_hand2(SDL_Renderer* renderer)
     handY2 = handY1 + 2 * HEAD_RAD;
     SDL_SetRenderDrawColor(renderer, RED, GREEN, BLUE, ALPHA);
     SDL_RenderDrawLine(renderer, handX1, handY1, handX2, handY2);
-    SDL_Delay(100);
-    SDL_RenderPresent(renderer);
 }
 
 void add_leg1(SDL_Renderer* renderer)
@@ -102,8 +90,6 @@ void add_leg1(SDL_Renderer* renderer)
     legY2 = legY1 + BODY_RAD_Y;
     SDL_SetRenderDrawColor(renderer, RED, GREEN, BLUE, ALPHA);
     SDL_RenderDrawLine(renderer, legX1, legY1, legX2, legY2);
-    SDL_Delay(100);
-    SDL_RenderPresent(renderer);
 }
 
 void add_leg2(SDL_Renderer* renderer)
@@ -115,6 +101,4 @@ void add_leg2(SDL_Renderer* renderer)
     legY2 = legY1 + BODY_RAD_Y;
     SDL_SetRenderDrawColor(renderer, RED, GREEN, BLUE, ALPHA);
     SDL_RenderDrawLine(renderer, legX1, legY1, legX2, legY2);
-    SDL_Delay(100);
-    SDL_RenderPresent(renderer);
 }
