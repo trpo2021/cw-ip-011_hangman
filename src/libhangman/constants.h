@@ -88,7 +88,8 @@ const int ALPHABET_SIZE = 33;
 const int ALPHABET_D0_DISLOC = CYR_START_0 + CYR_CAPS_DISLOC_0;
 const int ALPHABET_D1_DISLOC
         = CYR_START_0 - CYR_START_1 + CYR_START_1 + CYR_CAPS_DISLOC_1;
-const int ALPHABET_YO_DISLOC = CYR_START_0 - CYR_START_1 + CYR_YO_LOWERCASE;
+// Ё размещается в последнем элементе из-за особенностей UTF-8
+const int ALPHABET_YO_DISLOC = CYR_YO_LOWERCASE - (ALPHABET_SIZE - 1);
 
 // Коды результата игры.
 // EXIT - преждевременный выход.
@@ -96,5 +97,5 @@ const int WIN = 13;
 const int LOSE = 14;
 const int EXIT = 15;
 
-// Какой сивол нужно ввести для выхода.
+// Какой символ нужно ввести для выхода.
 const char EXIT_SYMBOL = '0';
