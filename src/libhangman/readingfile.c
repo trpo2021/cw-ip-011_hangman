@@ -1,9 +1,10 @@
 #include "readingfile.h"
+
 #include "constants.h"
 #include "filecheck.h"
+
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <time.h>
 
 int count_words(FILE* p)

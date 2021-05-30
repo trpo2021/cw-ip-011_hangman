@@ -1,5 +1,7 @@
 #include "filecheck.h"
+
 #include "constants.h"
+
 #include <stdlib.h>
 
 int check_exist(FILE* file)
