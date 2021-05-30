@@ -213,6 +213,7 @@ int game(
             printf("\n\n");
             printf("Введите букву русского алфавита.\n");
             printf("Вы можете написать сразу часть слова.\n\n");
+            printf("Для выхода введите %c.\n\n", EXIT_SYMBOL);
             printf("Неверных попыток: %d\n", attempt);
             printf("Осталось попыток: %d\n\n", MAX_FAIL - attempt);
 
@@ -229,21 +230,18 @@ int game(
             } else {
                 if (symbol_n < (int)strlen(symbols))
                     symbol[0] = symbols[symbol_n++];
-                /**
-                 * Использовать "спрятанный символ"
-                 * для преждевременного прекращения теста.
-                 */
-                if (symbol[0] == HIDDEN_SYMBOL)
+
+                if (symbol[0] == EXIT_SYMBOL)
                     return EXIT;
+            }
+
+            if ((quit || symbol[0] == EXIT_SYMBOL) && !symbols) {
+                SDL_RemoveTimer(timer_check_for_quit);
+                return EXIT;
             }
 
             if (check_input(symbol, symbols, &symbol_n))
                 break;
-        }
-
-        if (quit && !symbols) {
-            SDL_RemoveTimer(timer_check_for_quit);
-            return EXIT;
         }
 
         // Запись буквы в маленьком регистре.

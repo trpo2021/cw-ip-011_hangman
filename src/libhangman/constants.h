@@ -124,3 +124,6 @@ static const int ALPHABET_YO_DISLOC
 static const int WIN = 13;
 static const int LOSE = 14;
 static const int EXIT = 15;
+
+// Какой сивол нужно ввести для выхода.
+static const char EXIT_SYMBOL = '0';
