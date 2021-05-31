@@ -47,7 +47,7 @@ int main()
     else if (game_state == LOSE)
         printf("Вы проиграли.");
     else if (game_state == EXIT)
-        printf("Выходим...\n\n");
+        printf("Выход.\n\n");
     else {
         printf("ОШИБКА: Получен неизвестный код статуса игры: %d\n",
                game_state);
@@ -56,7 +56,7 @@ int main()
     if (game_state != EXIT)
         printf("\n\nСлово: %s\n\n", word);
 
-    printf("Нажмите любую клавишу для продолжения...");
+    printf("Нажмите ENTER для продолжения...\n\n");
 
     // Избавление от \n, оставленного предыдущим getchar'ом.
     getchar();
