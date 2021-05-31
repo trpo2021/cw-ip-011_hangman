@@ -56,7 +56,7 @@ int main()
     if (game_state != EXIT)
         printf("\n\nСлово: %s\n\n", word);
 
-    printf("Нажмите любую клавишу для продолжения...");
+    printf("Нажмите ENTER для продолжения...");
 
     // Избавление от \n, оставленного предыдущим getchar'ом.
     getchar();
